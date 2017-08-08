@@ -4,30 +4,29 @@ Vou a muitos eventos de desenvolvedores em geral, muitos estranham a minha motiv
 
 ## Goroutines
 
-A primeira metade da história de Concorrência em Go. Execução leve de funções concorrentes. Você pode criar e executar toneladas dessas funções, se necessário, e o runtime do Go faz a multiplexação delas num numero configurado de CPU/Threads do sistema operacional à medida que for necessário. Elas inicial com uma minúscula stack que pode crescer (e diminuir) via alocação dinâmica (e liberação) de memória. Elas são tão simples quanto `go f(x)` onde `f()` é uma funcão.
+The first 1/2 of Go's concurrency story. Lightweight, concurrent function execution. You can spawn tons of these if needed and the Go runtime multiplexes them onto the configured number of CPUs/Threads as needed. They start with a super small stack that can grow (and shrink) via dynamic allocation (and freeing). They are as simple as `go f(x)`, where `f()` is a function.
 
 ## Channels
 
-A outra parte da história de Concorrência em Go. Channels ou canais são uma espécie de "conduíte" tipado usado para receber e enviar valores entre as Goroutines. Elas são, por padrão, não bufferizadas, ou seja síncronas e bloqueantes. Elas também podem ser bufferizadas, permitindo que sejam enfileiradas internamente para processamento. Dessa maneira, multiplas Goroutines podem ler/escrever nos canais ao mesmo tempo sem "travar". Go também tem tipos primitivos para leitura de multiplus canais simultâneamente via comando `select`. 
+The other 1/2 of Go's concurrency story. Channels are a typed conduit used to send and receive values. These are used to pass values to and from Goroutines for processing. They are, by default unbuffered, meaning synchronous and blocking. They can also be buffered, allowing values to queue up inside of them for processing. Multiple go routines can read/write to them at the same time w/o having to take locks. Go also has primitives for reading from multiple channels simultaneously via the `select` statement. 
 
-## Compilado
+## Compiled
 
-Go compila seu programa num **binário estático**. Sim, você leu corretamente: **binário estático**. Isso faz que deploy de aplicações Go sejam extremamente simples, só sobreescrever o binário existente no servidor ou máquina cliente. Sem mais bundler, virtualenv, etc. Tudo isso é gerenciado em tempo de compilação. Isso simplifica **MUITO** o deploy.
+Go compiles your program into a **static binary**. Yep, you read that correctly: **a static binary**. This makes deployment really simple, just copy over the binary. No bundler, no virtualenv, etc. All of that is handled at compile time. This simplifies deployment greatly.
 
 ## Runtime
 
-Go é uma linguagem compilada mas ainda sim tem um runtime. Ele gerencia todos os detalhes do gerenciamento de memória a você. Memória usada por variáveis duram enquanto as variáveis são referenciadas, que usualmente é só dentro do escopo da funcão. Go tem garbage collector.
+Go is a complied language, but still has a runtime. It handles all of the details of mallocing memory for you, allocating/deallocating space for variables, etc. Memory used by variables lasts as long as the variables are referenced, which is usually the scope of a function. Go has a garbage collector.
 
-## Passagem por valor
+## Pass By Value
 
-Tudo é passado por valor, mas também há ponteiros. Vale esclarecer que um ponteiro é uma locação de memória então ele age como passando por referência. Isso significa que, por padrão, não há estado compartilhado de memória entre as funções. Entretanto, se você realmente precisar, você pode passar um ponteiro por questões de performance e quantidade de memória. O Go faz a coisa certa por padrão. Ah! Não tem cálculo de ponteiro, por padrão, ou seja, você não poderá fazer besteira contra si mesmo sem querer.
+Everything is passed by value, but there are pointers. It's just that the value of a pointer is a memory location, so it acts as pass by reference. This means that, by default, there is no shared state between functions. But, you can pass a pointer if you desire/need it for performance/memory utilization reasons. Go does the right thing by default, but doesn't shackle you. Oh, and there isn't any pointer math, so you won't screw yourself with it.
 
-Como mencionado em [HN](http://news.ycombinator.com/item?id=5196498), você até pode fazer cálculo de ponteiro com o pacote ["unsafe"](http://golang.org/pkg/unsafe/) `unsafe.Pointer`. 
+As pointed out on [HN](http://news.ycombinator.com/item?id=5196498), you can do pointer math with the ["unsafe"](http://golang.org/pkg/unsafe/) package and `unsafe.Pointer`. 
 
-## Sistema de tipagem
+## Type System
 
-Go tem structs (estruturas de dados) e interfaces. Structs em Go podem ter métodos *associados* a eles. Structs podem ser anonimamente incluídos em outras structs, permitindo assim que as variávies e métodos dessas structs sejam parte dessa outra struct maior. As interfaces em Go são um conjunto de assinatura de metodos. Structs implementam uma interface somente implementando os métodos descritos na definição da interface. Funções podem receber valores pelas interfaces, como [em](http://play.golang.org/p/KfKLiAClQE). O compilador checa tudo isso em tempo de compilação.
-
+Go has structs and interfaces. Go's structs can have methods *associated* with them. Structs can be anonymously included in other structs to make the inside struct's variables/methods available as part of the enclosting struct. Interfaces are sets of method signatures. Structs implement an interface by implementing the methods described by the interface definition. Functions can receive values by interface, like [so](http://play.golang.org/p/KfKLiAClQE). The compiler checks all of this at compile time.
 ## Package System
 
 Or lack there of. Since Go compiles everything statically, you don't have to worry about packages at runtime. But how do you include libraries into your code? Simply by importing them via url, like so: `import "github.com/bmizerany/pq"`. Go's tooling knows how to look that up and clone the repo. Also works with Mercurial, Bazaar & Subversion.
