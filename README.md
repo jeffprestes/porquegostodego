@@ -1,6 +1,6 @@
 # Porque gosto de Go
 
-Vou a muitos eventos de desenvolvedores em geral, muitos estranham a minha motivação tão grande por Go e me fazem essa pergunta. Daí encontrei o artigo do [Freeformz](https://github.com/freeformz/) e achei a ideia de deixar isso no Github muito boa. Ao ler o artigo dele encontrei muitas coisas que concordo então resolvi fazer um fork e escrever a versão em português. O intuíto é deixar claro as vantagens de Go e ajudar desenvolvedores a convencerem seus gerentes e outros colaboradores a iniciarem a adoção de Go.
+Vou a muitos eventos de desenvolvedores em geral, muitos estranham a minha motivação tão grande por Go e me fazem essa pergunta. Daí encontrei o artigo do [Freeformz](https://github.com/freeformz/) e achei a ideia de deixar isso no Github muito boa. Ao ler o artigo dele encontrei muitas coisas que concordo então resolvi fazer um fork e escrever a minha versão em português. O intuíto é deixar claro as vantagens de Go e ajudar desenvolvedores a convencerem seus gerentes e outros colaboradores a iniciarem a adoção de Go.
 
 ## Goroutines
 
@@ -22,11 +22,11 @@ Go é uma linguagem compilada mas ainda sim tem um runtime. Ele gerencia todos o
 
 Tudo é passado por valor, mas também há ponteiros. Vale esclarecer que um ponteiro é uma locação de memória então ele age como passando por referência. Isso significa que, por padrão, não há estado compartilhado de memória entre as funções. Entretanto, se você realmente precisar, você pode passar um ponteiro por questões de performance e quantidade de memória. O Go faz a coisa certa por padrão. Ah! Não tem cálculo de ponteiro, por padrão, ou seja, você não poderá fazer besteira contra si mesmo sem querer.
 
-Como mencionado em [HN](http://news.ycombinator.com/item?id=5196498), você até pode fazer cálculo de ponteiro com o pacote ["unsafe"](http://golang.org/pkg/unsafe/) `unsafe.Pointer`. 
+Como mencionado no [HN](http://news.ycombinator.com/item?id=5196498), você até pode fazer cálculo de ponteiro com o pacote ["unsafe"](http://golang.org/pkg/unsafe/) `unsafe.Pointer`. 
 
 ## Sistema de tipagem
 
-Go tem structs (estruturas de dados) e interfaces. Structs em Go podem ter métodos *associados* a eles. Structs podem ser anonimamente incluídos em outras structs, permitindo assim que as variávies e métodos dessas structs sejam parte dessa outra struct maior. As interfaces em Go são um conjunto de assinatura de metodos. Structs implementam uma interface somente implementando os métodos descritos na definição da interface. Funções podem receber valores pelas interfaces, como [em](http://play.golang.org/p/KfKLiAClQE). O compilador checa tudo isso em tempo de compilação.     
+Go tem structs (estruturas de dados) e interfaces. Structs em Go podem ter métodos *associados* a eles. Structs podem ser anonimamente incluídos em outras structs, permitindo assim que as variávies e métodos dessas structs sejam parte dessa outra struct maior. As interfaces em Go são um conjunto de assinatura de metodos. Structs implementam uma interface simplesmente implementando os métodos descritos na definição da interface. Funções podem receber valores pelas interfaces, como [nesse exemplo aqui](http://play.golang.org/p/KfKLiAClQE). O compilador checa tudo isso em tempo de compilação.     
 
 ## Sistema de pacote
 
@@ -34,7 +34,7 @@ Ou a falta dele. Como o Go compila tudo estaticamemte, você não tem de se preo
 
 ## Funções Anonimas & Closures
 
-Go suporta funções anonimas que podem formar closures. Essas funções podem então ser passadas e reter o ambiente (variáveis, por exemplo) sob o qual foram criadas, como [em](http://play.golang.org/p/4rYrqw4l7m). Isso pode ser muito poderoso quando [combinados](https://github.com/freeformz/filechan) com channels e goroutines. 
+Go suporta funções anonimas que podem formar closures. Essas funções podem então ser passadas e reter o ambiente (variáveis, por exemplo) sob o qual foram criadas, como [aqui](http://play.golang.org/p/4rYrqw4l7m). Isso pode ser muito poderoso quando [combinados](https://github.com/freeformz/filechan) com channels e goroutines. 
 
 ## Profiling nativo
 
