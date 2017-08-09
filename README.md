@@ -27,7 +27,6 @@ Como mencionado no [HN](http://news.ycombinator.com/item?id=5196498), você até
 ## Sistema de tipagem
 
 Go tem structs (estruturas de dados) e interfaces. Structs em Go podem ter métodos *associados* a eles. Structs podem ser anonimamente incluídos em outras structs, permitindo assim que as variávies e métodos dessas structs sejam parte dessa outra struct maior. As interfaces em Go são um conjunto de assinatura de metodos. Structs implementam uma interface simplesmente implementando os métodos descritos na definição da interface. Funções podem receber valores pelas interfaces, como [nesse exemplo aqui](http://play.golang.org/p/KfKLiAClQE). O compilador checa tudo isso em tempo de compilação.     
-
 ## Sistema de pacote
 
 Ou a falta dele. Como o Go compila tudo estaticamemte, você não tem de se preocupar sobre os pacotes em tempo de execução. Porém, como você incluí bibliotecas no seu código? Simplesmente importando-as via URL: `import "github.com/bmizerany/pq"`. As ferramentas em Go sabem como localizá-la e clonar o repositório. Também funciona com Mercurial, Bazaar e Subversion.
