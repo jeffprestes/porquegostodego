@@ -26,60 +26,44 @@ Como mencionado em [HN](http://news.ycombinator.com/item?id=5196498), você até
 
 ## Sistema de tipagem
 
-Go tem structs (estruturas de dados) e interfaces. Structs em Go podem ter métodos *associados* a eles. Structs podem ser anonimamente incluídos em outras structs, permitindo assim que as variávies e métodos dessas structs sejam parte dessa outra struct maior. As interfaces em Go são um conjunto de assinatura de metodos. Structs implementam uma interface somente implementando os métodos descritos na definição da interface. Funções podem receber valores pelas interfaces, como [em](http://play.golang.org/p/KfKLiAClQE). O compilador checa tudo isso em tempo de compilação.
+Go tem structs (estruturas de dados) e interfaces. Structs em Go podem ter métodos *associados* a eles. Structs podem ser anonimamente incluídos em outras structs, permitindo assim que as variávies e métodos dessas structs sejam parte dessa outra struct maior. As interfaces em Go são um conjunto de assinatura de metodos. Structs implementam uma interface somente implementando os métodos descritos na definição da interface. Funções podem receber valores pelas interfaces, como [em](http://play.golang.org/p/KfKLiAClQE). O compilador checa tudo isso em tempo de compilação.     
 
-## Package System
+## Sistema de pacote
 
-Or lack there of. Since Go compiles everything statically, you don't have to worry about packages at runtime. But how do you include libraries into your code? Simply by importing them via url, like so: `import "github.com/bmizerany/pq"`. Go's tooling knows how to look that up and clone the repo. Also works with Mercurial, Bazaar & Subversion.
+Ou a falta dele. Como o Go compila tudo estaticamemte, você não tem de se preocupar sobre os pacotes em tempo de execução. Porém, como você incluí bibliotecas no seu código? Simplesmente importando-as via URL: `import "github.com/bmizerany/pq"`. As ferramentas em Go sabem como localizá-la e clonar o repositório. Também funciona com Mercurial, Bazaar e Subversion.
 
-## Anonymous Functions & Closures
+## Funções Anonimas & Closures
 
-Go supports anonymous functions that can form closures. These functions can then be passed around and retain the environment under which they were created, like [so](http://play.golang.org/p/4rYrqw4l7m). This can be super powerful when [combined](https://github.com/freeformz/filechan) with channels and go rountines.
+Go suporta funções anonimas que podem formar closures. Essas funções podem então ser passadas e reter o ambiente (variáveis, por exemplo) sob o qual foram criadas, como [em](http://play.golang.org/p/4rYrqw4l7m). Isso pode ser muito poderoso quando [combinados](https://github.com/freeformz/filechan) com channels e goroutines. 
 
-## Built in profiling
+## Profiling nativo
 
-It supports pprof as part of the standard library. And with a [very small bit of work](http://golang.org/pkg/net/http/pprof/), you can access profiling info via a http interface.
+Go suporta pprof como parte do pacote padrão. E com um [um pouquinho de trabalho](http://golang.org/pkg/net/http/pprof/) você pode acessar dados de profiling via HTTP.
 
 ## Defer
 
-Ever forget to close a file descriptor or free some memory? So have the designers of Go. The reason for this is that you usually have to perform those actions far away from where the resources were opened/allocated. Go solves this problem with the `defer` statement. Each `defer` statement pushes a function/expression onto a stack that get's executed in LIFO order after the enclosing function returns. This makes cleanup really easy, after opened a file, just `defer file.Close()`.
+Quem nunca esqueceu de fechar um arquivo ou liberar outros recursos de I/O como conexão com Banco de Dados? O mesmo aconteceu com os designers do Go. A razão desse problema é que geralmente você precisa fechar/encerar essas recursos longe de onde esses arquivos/conexões foram abertos. Go resolve esse problema com o comando `defer`. Cada comando `defer` enfilera o comando de fechamento/encerramemto para ser executado logo após o comando de retorno da função, ou seja, quando a execução da função for encerrada. Ou seja, depois de abrir um arquivo só chamar `defer file.Close()`.
 
-## Comprehensive Standard Library
+## Biblioteca padrão extensa e completa
 
-Go's [standard library](http://golang.org/pkg/) is pretty comprehensive.
+[Biblioteca padrão](http://golang.org/pkg/) do Go é bem completa e extensa.
 
-## It's Fast
+## É rápido!
 
-Go compiles down to native code and it does it fast. Usually in just a few seconds.
+Go compila para código nativo e isso o torna rápido. A execução chegando-se até a nanosegundos em alguns casos.
 
-## Comprehensive Tooling Out Of The Box
+## Completo conjunto de comandos para ajudar no desenvolvimento
 
-Go do a `go --help`. Some of my favorites: `go fmt`, `go doc`, `go fix` `go get` `go tool pprof` & `go test`.
+Execute `go --help` e dê uma lida. Alguns dos meus favoritos: `go fmt`, `go doc`, `go fix` `go get` `go tool pprof` & `go test`.
 
-## Straight Forward Testing
+## Testes sem complicação
 
-Super [straight foward](http://golang.org/pkg/testing/), no magic.
+Super [simples](http://golang.org/pkg/testing/), sem mágicas.
 
-## Simple C Interface
+## Interface com C de forma simples
 
-By using build directives you can integrate with C libraries really [easily](https://gist.github.com/freeformz/4552031).
+Por utilizar diretivas de compilação você pode integrar sua aplicação Go com bibliotecas C muito [facilmente](https://gist.github.com/freeformz/4552031)
 
-## Straight Forward Syntax / Standard Formatting
+## Sintaxe simples / Formatação de código padronizado
 
-The syntax is pretty simple, C like w/o all the crazy of C. But what's really nice is `go fmt`, which re-writes your code into the Go standard format. No more arguments over coding style!
-
-# Issues
-
-With all of that said, it's not perfect...
-
-## Runtime 
-
-Go's runtime is not super [tuned](http://golang.org/doc/faq#Why_does_Go_perform_badly_on_benchmark_x) yet. By comparison the JVM has had over 18 years of development history behind it. But, for a 1.0.X runtime & language, Go is pretty damn good.
-
-## Garbage Collector
-
-Go programs can malloc a lot of ram at times, even when the program itself isn't using much. Most of this shows up as VIRT though, so most linux systems just won't care.
-
-## 1 CPU by default
-
-This is going to change over time, but the runtime will, by default, use only [one CPU](http://golang.org/doc/faq#Why_no_multi_CPU).
+A sintaxe é muito simples. Porém umas das coisas que gosto é o `go fmt`, assim não preciso me preocupar com a formatação e estilo do meu código. Ele reescreve meu código para o estilo padrão de Go. Nunca mais aquelas discussões de onde as chaves ( { } ) devem ficar depois do if ;)
